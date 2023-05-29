@@ -41,6 +41,27 @@ namespace LaMiaPizzeria.Controllers.API
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult SearchById(int id) 
+        { 
+             using(var db = new PizzaContext())
+
+                {
+                  Pizza? pizzaIdToSearch = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if(pizzaIdToSearch != null)
+                {
+                    return Ok(pizzaIdToSearch);
+
+                }
+                 return NotFound();
+
+                }
+        
+        
+        
+        
+        }
 
     }
 }
