@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LaMiaPizzeria.Database;
+using LaMiaPizzeria.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LaMiaPizzeria.Controllers.API
@@ -7,6 +9,21 @@ namespace LaMiaPizzeria.Controllers.API
     [ApiController]
     public class PizzaAPIController : ControllerBase
     {
+
+        [HttpGet]
+        public IActionResult GetPizzas()
+        {
+
+            using(PizzaContext db = new PizzaContext())
+            {
+                List<Pizza> pizzas = db.Pizzas.ToList();
+                return Ok(pizzas);
+            }
+
+        }
+
+        
+
 
     }
 }
