@@ -14,7 +14,7 @@ namespace LaMiaPizzeria.Controllers.API
         public IActionResult GetPizzas()
         {
 
-            using(PizzaContext db = new PizzaContext())
+            using (PizzaContext db = new PizzaContext())
             {
                 List<Pizza> pizzas = db.Pizzas.ToList();
                 return Ok(pizzas);
@@ -22,7 +22,24 @@ namespace LaMiaPizzeria.Controllers.API
 
         }
 
-        
+        [HttpGet]
+        public IActionResult SearchByName(string name)
+        {
+            using(var db = new PizzaContext())
+            { 
+             Pizza? pizzatosearch = db.Pizzas.Where(pizza => pizza.Name.Contains(name)).FirstOrDefault();
+
+                if (pizzatosearch != null)
+                {
+                    return Ok(pizzatosearch);
+                }
+                else 
+                { 
+
+                     return NotFound();
+                 }
+            }
+        }
 
 
     }
