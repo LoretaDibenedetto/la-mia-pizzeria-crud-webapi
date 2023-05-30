@@ -92,7 +92,10 @@ namespace LaMiaPizzeria.Controllers.API
 
                 if (pizzaIdToEdit != null)
                 {
-                    
+                    pizzaIdToEdit.Name = data.Name;
+                    pizzaIdToEdit.Description = data.Description;
+                    pizzaIdToEdit.Image = data.Image;
+                    pizzaIdToEdit.Price = data.Price;
                     return Ok();
                 }
                 else
