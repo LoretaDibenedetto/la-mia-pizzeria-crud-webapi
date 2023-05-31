@@ -1,7 +1,7 @@
 ﻿  <!--landing page-->
 
 
-<div style="height:1000px" class="container-md text-center text-white mb-5">
+<div  class="container-md text-center text-white mb-5">
     <div class="mt-5">
         <hr class="border border-danger border-2 opacity-50">
     </div>
@@ -30,9 +30,61 @@
               <hr class="border border-danger border-2 opacity-50">
         </div>
  </div>
+  <div class="container-md">
+      <div class="row">
+                <div class="col-12 col-md-12 col-lg-4 mb-<4">
+                <div id="container_no_article" class="d-none"> <h3>Non ci sono pizze da visualizzare</h3></div>
+                <div id="container_cards" class="d-none d-flex justify-content-between gap-3 flex-wrap">
+                    <!--
+                            Questa sezione dovrà essere popolata da Javascript con i dati ricevuti con axios.
+                            Per fare questo ho dato un id univoco a questo <div> dove potro usarlo per iniettare con
+                            javascript le varie cards!.
+                    -->
+
+
+                </div>
+            </div>
+        </div>
+</div>
     
-     
+@section ScriptSection{
+
+              axios.get("https://localhost:7199/api/PizzaAPI/GetPizzas").then((result) => {
+                const listPizza = result.data;
+
+                debugger;
+
+                if(listPizza.length == 0){
+                    document.getElementById("container_no_article").classList.remove("d-none");
+                   // document.getElementById("spinner").classList.add("d-none");
+                } else {
+                        document.getElementById("container_cards").classList.remove("d-none");
+                      //  document.getElementById("spinner").classList.add("d-none");
+
+                    listPizza.forEach(Pizza => {
+                        document.getElementById("container_cards").innerHTML += `
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="${Pizza.image}" alt="${Pizza.image}">
+                <div class="card-body">
+                    <h5 class="card-title">${Pizza.name}</h5>
+                    <p class="card-text">${Pizza.description}</p>
+                     <p class="card-text">${Pizza.price}</p>
+
+                    <a class="btn btn-info btn-sm" href="/Home/Detail/${Pizza.id}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </a>
+                </div>
+             </div>
+           
+				`
+			});
+		}
+    }).catch( (error) => {
+		console.error("Errore!");
+		console.log(error);
+	});
+}
 
 
 
-          
+
