@@ -1,0 +1,56 @@
+﻿
+<div class="container text-white mt-5">
+    <div class="row">
+    <hr class="border border-danger border-2 opacity-50">
+        <div class="col-12">
+            <div id="details_container">
+
+            </div>
+                  
+        </div>
+    </div>
+    <hr class="border border-danger border-2 opacity-50">
+</div>
+
+
+
+@section ScriptSection{
+
+    //prendo id
+        const url = window.location.href;
+        const indexOfLastSlash = url.lastIndexOf('/');
+        const id = url.substring(indexOfLastSlash + 1);
+
+             axios.get('/api/PizzaAPI/SearchById/' + id).then((result) => {
+                const Pizza = result.data;
+
+               
+
+                document.getElementById("details_container").innerHTML =  `
+
+                <div class="d-flex  ">
+                    <h1 class="mt-3 mb-3">Dettagli della Pizza</h1>
+                </div>
+                <div class="mb-4">
+                 <img class="rounded-4" src="${Pizza.image}" width="280" alt="${Pizza.image}">
+                </div>
+                <h3>
+                    Nome pizza:
+                </h3>
+
+                  <p>  ${Pizza.name}</p>
+                <h3>
+                    Descrizione:
+                </h3>
+
+                 <p>  ${Pizza.description}</p>
+    
+            `
+        }).catch((error) => {
+            console.error("Errore!");
+            console.log(error);
+        });
+
+
+
+}
